@@ -14,8 +14,8 @@ Reconstruir la base procesada, verificar su cobertura y comunicar un patrón med
 ## 1. Construcción de la base
 
 ```{r}
-source("R/01_descargar_datos.R")
-source("R/02_preparar_datos.R")
+source(here::here("R", "01_descargar_datos.R"))
+source(here::here("R", "02_preparar_datos.R"))
 
 datos_ecuador <- readr::read_csv(
   here::here("datos", "procesado", "ecuador_macro.csv"),

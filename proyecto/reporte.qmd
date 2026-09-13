@@ -20,9 +20,9 @@ execute:
 #| label: preparar-proyecto
 #| include: false
 
-source("R/01_descargar_datos.R")
-source("R/02_preparar_datos.R")
-source("R/03_analizar_datos.R")
+source(here::here("R", "01_descargar_datos.R"))
+source(here::here("R", "02_preparar_datos.R"))
+source(here::here("R", "03_analizar_datos.R"))
 
 datos_ecuador <- readr::read_csv(
   here::here("datos", "procesado", "ecuador_macro.csv"),
