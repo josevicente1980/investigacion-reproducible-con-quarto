@@ -1,0 +1,257 @@
+---
+title: "Investigación reproducible con Quarto"
+subtitle: "Clase 3 · Del análisis a la publicación"
+author: "José Vicente Ordóñez Yaguache"
+institute: "Universidad Nacional de Loja"
+format:
+  revealjs:
+    theme: [default, recursos/tema.scss]
+    slide-number: c/t
+    transition: fade
+    incremental: false
+    embed-resources: true
+    width: 1600
+    height: 900
+execute:
+  echo: true
+  eval: false
+---
+
+## Propósito de la sesión
+
+Al terminar, cada participante podrá:
+
+- organizar un informe científico breve
+- incorporar resultados y referencias cruzadas
+- generar HTML y Word desde una misma fuente
+- publicar el proyecto con GitHub Pages
+
+## Ruta de trabajo · 120 minutos
+
+| Bloque | Minutos | Producto |
+|---|---:|---|
+| Estructura del informe | 20 | Esqueleto científico |
+| Integración de resultados | 30 | Informe ejecutable |
+| Formatos y revisión | 20 | HTML y Word |
+| GitHub Pages | 25 | Sitio publicado |
+| Proyecto final | 25 | Versión 1.0 etiquetada |
+
+## Una sola fuente, varios productos
+
+```{mermaid}
+flowchart TD
+  A[reporte.qmd] --> B[HTML]
+  A --> C[Word]
+  A --> D[PDF]
+  A --> E[Sitio web]
+```
+
+El contenido se mantiene en el QMD. Cada formato adapta su presentación.
+
+## Estructura mínima del informe
+
+1. Introducción y pregunta
+2. Datos y método
+3. Resultados
+4. Limitaciones
+5. Conclusiones
+6. Referencias
+
+Cada sección cumple una función argumentativa diferente.
+
+## Configuración de varios formatos
+
+```yaml
+format:
+  html:
+    toc: true
+    code-fold: true
+  docx:
+    toc: true
+```
+
+El mismo archivo puede generar una versión navegable y otra editable.
+
+## Código reutilizable
+
+```{r}
+source("R/02_preparar_datos.R")
+source("R/03_analizar_datos.R")
+```
+
+Los scripts concentran las transformaciones. El informe selecciona los resultados que necesita comunicar.
+
+## Incluir una figura generada
+
+````markdown
+![Indicadores macroeconómicos de Ecuador](
+  ../resultados/figuras/series_ecuador.png
+){#fig-series width=85%}
+````
+
+La etiqueta permite citar `@fig-series` desde el texto.
+
+## Tablas con propósito
+
+Una tabla debe:
+
+- responder una pregunta concreta
+- indicar unidades y periodo
+- conservar precisión suficiente
+- identificar su fuente
+
+La tabla no debe repetir cada número descrito en el texto.
+
+## Resultados e interpretación
+
+**Resultado**
+
+Describe el patrón medido y remite a la evidencia.
+
+**Interpretación**
+
+Explica el sentido del patrón dentro del alcance del diseño.
+
+**Limitación**
+
+Aclara qué no puede concluirse con estos datos.
+
+## Revisión reproducible
+
+Antes de publicar:
+
+```{r}
+source("R/99_verificar_proyecto.R")
+```
+
+Después:
+
+```bash
+quarto render
+git status
+```
+
+El render completo detecta rutas rotas y dependencias ausentes.
+
+## Qué conserva Git
+
+```{mermaid}
+flowchart TD
+  A[Commit] --> B[Archivos fuente]
+  A --> C[Autor y fecha]
+  A --> D[Mensaje del cambio]
+  A --> E[Relación con el commit anterior]
+```
+
+Git permite reconstruir cómo evolucionó el proyecto.
+
+## Un commit de cierre
+
+```bash
+git status
+git diff
+git add .
+git commit -m "Integra informe final y publicación del curso"
+git push
+```
+
+Un commit final no sustituye los commits pequeños realizados durante el proceso.
+
+## Etiqueta de versión
+
+```bash
+git tag -a v1.0.0 -m "Primera versión completa del proyecto"
+git push origin v1.0.0
+```
+
+La etiqueta identifica un estado estable que puede citarse o evaluarse.
+
+## GitHub Pages
+
+El repositorio incluye un flujo automático que:
+
+1. instala R y Quarto
+2. reconstruye datos y resultados
+3. renderiza el sitio
+4. publica la carpeta `docs`
+
+La automatización también funciona como prueba de reproducibilidad.
+
+## Activar la publicación
+
+En el repositorio de GitHub:
+
+1. Abra **Settings**.
+2. Seleccione **Pages**.
+3. En **Source**, elija **GitHub Actions**.
+4. Abra **Actions** y compruebe el flujo `Renderizar y publicar`.
+
+## Dirección esperada
+
+```text
+https://josevicente1980.github.io/
+investigacion-reproducible-con-quarto/
+```
+
+GitHub puede tardar algunos minutos en completar el primer despliegue.
+
+## Lectura del registro de Actions
+
+| Estado | Significado | Acción |
+|---|---|---|
+| Verde | Ejecución completa | Abrir el sitio |
+| Amarillo | Ejecución activa | Esperar y revisar pasos |
+| Rojo | Error | Abrir el paso fallido |
+
+El primer error visible suele señalar la etapa exacta que debe corregirse.
+
+## Colaboración mediante ramas
+
+```bash
+git switch -c mejora-discusion
+# editar y renderizar
+git add .
+git commit -m "Amplía discusión de resultados"
+git push -u origin mejora-discusion
+```
+
+Una rama aísla un cambio antes de integrarlo en `main`.
+
+## Lista de verificación científica
+
+- La pregunta coincide con los datos disponibles.
+- La fuente y las transformaciones están documentadas.
+- Las figuras y tablas se generan desde código.
+- Las conclusiones respetan el alcance del análisis.
+- Otra persona puede ejecutar las instrucciones.
+
+## Práctica final · 25 minutos
+
+Abra `practicas/practica_3.qmd` y complete:
+
+1. interpretación de un resultado
+2. limitación principal
+3. render del informe
+4. commit y push
+5. verificación de GitHub Actions
+
+## Producto final
+
+El proyecto se completa cuando una persona puede:
+
+- clonar el repositorio
+- ejecutar tres scripts en orden
+- renderizar el informe
+- obtener los mismos archivos derivados
+- consultar el sitio publicado
+
+## Cierre
+
+La reproducibilidad convierte el proceso de investigación en evidencia auditable.
+
+**Secuencia de salida**
+
+```r
+source("R/99_verificar_proyecto.R")
+source("R/98_renderizar_clases.R")
+```

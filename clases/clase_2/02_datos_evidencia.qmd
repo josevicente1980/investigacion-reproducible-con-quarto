@@ -1,0 +1,260 @@
+---
+title: "Investigación reproducible con Quarto"
+subtitle: "Clase 2 · De los datos a la evidencia"
+author: "José Vicente Ordóñez Yaguache"
+institute: "Universidad Nacional de Loja"
+format:
+  revealjs:
+    theme: [default, recursos/tema.scss]
+    slide-number: c/t
+    transition: fade
+    incremental: false
+    embed-resources: true
+    width: 1600
+    height: 900
+execute:
+  echo: true
+  eval: false
+---
+
+## Propósito de la sesión
+
+Al terminar, cada participante podrá:
+
+- descargar y documentar datos desde R
+- separar datos originales y procesados
+- producir una figura y una tabla desde código
+- vincular evidencia y argumento dentro de Quarto
+
+## Ruta de trabajo · 120 minutos
+
+| Bloque | Minutos | Producto |
+|---|---:|---|
+| Pregunta, variable y fuente | 15 | Matriz de trazabilidad |
+| Descarga y control de calidad | 30 | Base original documentada |
+| Transformación con R | 25 | Base procesada |
+| Evidencia en Quarto | 30 | Figura y tabla |
+| Práctica y commit | 20 | Segundo avance verificable |
+
+## El principio de trazabilidad
+
+Cada afirmación cuantitativa debe responder cuatro preguntas:
+
+| Pregunta | Evidencia requerida |
+|---|---|
+| ¿De dónde proviene? | Fuente y código del indicador |
+| ¿Cómo se transformó? | Script ejecutable |
+| ¿Qué resultado produjo? | Tabla, figura o modelo |
+| ¿Dónde se interpreta? | Texto del informe |
+
+## Variables del caso
+
+| Variable | Código WDI | Unidad |
+|---|---|---|
+| Crecimiento del PIB | `NY.GDP.MKTP.KD.ZG` | Porcentaje anual |
+| Desempleo total | `SL.UEM.TOTL.ZS` | Porcentaje de la fuerza laboral |
+| Inflación | `FP.CPI.TOTL.ZG` | Porcentaje anual |
+| PIB per cápita | `NY.GDP.PCAP.CD` | USD corrientes |
+
+## La descarga también forma parte del método
+
+```{r}
+indicadores <- c(
+  crecimiento_pib = "NY.GDP.MKTP.KD.ZG",
+  desempleo = "SL.UEM.TOTL.ZS",
+  inflacion = "FP.CPI.TOTL.ZG"
+)
+
+WDI::WDI(
+  country = "ECU",
+  indicator = indicadores,
+  start = 2000,
+  end = 2024
+)
+```
+
+## Primera etapa · datos originales
+
+```{r}
+source("R/01_descargar_datos.R")
+```
+
+El script crea:
+
+- `datos/original/wdi_ecuador_2000_2024.csv`
+- `datos/original/diccionario_wdi.csv`
+
+La fecha de descarga queda registrada en el diccionario.
+
+## Una verificación por etapa
+
+La descarga termina con una comprobación automática:
+
+```{r}
+stopifnot(
+  nrow(datos_originales) > 0,
+  all(c("iso2c", "country", "year") %in% names(datos_originales))
+)
+```
+
+Si la condición falla, el flujo se detiene antes de contaminar las etapas siguientes.
+
+## Segunda etapa · datos procesados
+
+```{r}
+source("R/02_preparar_datos.R")
+```
+
+El script selecciona variables, ordena los años, crea periodos y controla duplicados.
+
+## Transformación legible
+
+```{r}
+datos_ecuador <- datos_originales |>
+  dplyr::transmute(
+    anio = year,
+    crecimiento_pib,
+    desempleo,
+    inflacion,
+    pib_per_capita_usd
+  ) |>
+  dplyr::arrange(anio)
+```
+
+Cada verbo expresa una decisión analítica reconocible.
+
+## Faltantes y cobertura
+
+```{r}
+datos_ecuador |>
+  dplyr::summarise(
+    inicio = min(anio),
+    fin = max(anio),
+    dplyr::across(
+      crecimiento_pib:pib_per_capita_usd,
+      ~ sum(is.na(.x))
+    )
+  )
+```
+
+Un valor faltante requiere documentación. No debe reemplazarse sin una justificación metodológica.
+
+## La figura responde una pregunta
+
+```{r}
+datos_ecuador |>
+  tidyr::pivot_longer(
+    crecimiento_pib:inflacion,
+    names_to = "indicador",
+    values_to = "valor"
+  ) |>
+  ggplot2::ggplot(ggplot2::aes(anio, valor)) +
+  ggplot2::geom_line() +
+  ggplot2::facet_wrap(~indicador, scales = "free_y")
+```
+
+La escala libre facilita la lectura, pero impide comparar magnitudes visualmente entre paneles.
+
+## Etiquetas y referencias cruzadas
+
+````markdown
+```{r}
+#| label: fig-series
+#| fig-cap: "Indicadores macroeconómicos de Ecuador"
+```
+
+La @fig-series muestra cambios marcados entre periodos.
+````
+
+Quarto actualiza la numeración sin edición manual.
+
+## Una tabla reproducible
+
+```{r}
+resumen_periodo <- datos_ecuador |>
+  dplyr::group_by(periodo) |>
+  dplyr::summarise(
+    crecimiento = mean(crecimiento_pib, na.rm = TRUE),
+    desempleo = mean(desempleo, na.rm = TRUE),
+    inflacion = mean(inflacion, na.rm = TRUE)
+  )
+```
+
+## Citar la fuente en el texto
+
+```markdown
+Los indicadores proceden de World Development Indicators
+[@worldbank2026].
+```
+
+La clave `worldbank2026` corresponde a una entrada de `referencias/referencias.bib`.
+
+## Datos, evidencia e interpretación
+
+```{mermaid}
+flowchart LR
+  A[Dato] --> B[Transformación]
+  B --> C[Resultado]
+  C --> D[Interpretación]
+  D --> E[Conclusión limitada]
+```
+
+Una visualización muestra un patrón. Por sí sola no demuestra causalidad.
+
+## Asociación exploratoria
+
+```{r}
+modelo <- lm(
+  desempleo ~ crecimiento_pib + inflacion,
+  data = datos_ecuador
+)
+
+broom::tidy(modelo, conf.int = TRUE)
+```
+
+El tamaño de la muestra, la estructura temporal y las variables omitidas limitan cualquier interpretación causal.
+
+## Narrativa basada en evidencia
+
+Una redacción defendible distingue:
+
+- lo observado en los datos
+- la interpretación propuesta
+- las limitaciones del análisis
+
+Evite convertir una correlación en una afirmación causal.
+
+## Git para cambios analíticos
+
+```bash
+git status
+git diff
+git add R/ datos/ practicas/practica_2.qmd
+git commit -m "Construye base y evidencia del caso Ecuador"
+git push
+```
+
+`git diff` permite revisar las decisiones antes de registrarlas.
+
+## Práctica guiada · 20 minutos
+
+Abra `practicas/practica_2.qmd` y complete:
+
+1. ejecución de los scripts 01 y 02
+2. control de cobertura y faltantes
+3. una figura con etiqueta y título
+4. una interpretación de máximo 80 palabras
+5. commit de cierre
+
+## Evidencia de aprendizaje
+
+La sesión queda completada cuando:
+
+- la base procesada se reconstruye desde el script
+- la figura cambia al cambiar el código
+- la fuente aparece citada
+- la interpretación respeta el alcance descriptivo
+
+## Próxima sesión
+
+La clase 3 integrará el análisis en un informe, generará varios formatos y publicará el sitio mediante GitHub Pages.

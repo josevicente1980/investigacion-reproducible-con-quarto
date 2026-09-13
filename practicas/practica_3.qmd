@@ -1,0 +1,56 @@
+---
+title: "Práctica 3 · Informe y publicación"
+format: html
+execute:
+  echo: true
+  eval: false
+---
+
+## Objetivo
+
+Completar la interpretación del caso, renderizar el informe y publicar una versión estable del proyecto.
+
+## 1. Reconstrucción completa
+
+```{r}
+source("R/01_descargar_datos.R")
+source("R/02_preparar_datos.R")
+source("R/03_analizar_datos.R")
+source("R/99_verificar_proyecto.R")
+```
+
+## 2. Resultado principal
+
+Revise `resultados/tablas/resumen_periodo.csv` y redacte un resultado verificable de máximo 80 palabras.
+
+**Resultado:**
+
+## 3. Limitación
+
+Explique por qué el modelo exploratorio no permite afirmar que el crecimiento causa una reducción del desempleo.
+
+**Limitación:**
+
+## 4. Render del informe
+
+```bash
+quarto render proyecto/reporte.qmd
+```
+
+- [ ] Se generó el HTML.
+- [ ] Se generó el Word.
+- [ ] Las referencias aparecen al final.
+- [ ] La figura tiene número y título.
+
+## 5. Publicación
+
+```bash
+git status
+git add .
+git commit -m "Completa informe reproducible del caso Ecuador"
+git push
+git tag -a v1.0.0 -m "Primera versión completa"
+git push origin v1.0.0
+```
+
+**Dirección del sitio publicado:**

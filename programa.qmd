@@ -1,0 +1,77 @@
+---
+title: "Programa del curso"
+---
+
+## Datos generales
+
+| Elemento | Definición |
+|---|---|
+| Duración | 6 horas |
+| Organización | 3 clases de 2 horas |
+| Nivel | Inicial |
+| Modalidad de trabajo | Demostración breve, práctica guiada y producto verificable |
+| Herramientas | R, RStudio, Quarto, Git y GitHub |
+| Caso | Indicadores socioeconómicos de Ecuador, 2000–2024 |
+
+## Resultado general de aprendizaje
+
+Al finalizar el curso, el participante construye y publica un informe de investigación breve cuyo proceso puede reconstruirse a partir de los datos, el código y el historial del repositorio.
+
+## Clase 1 · Del proyecto al primer documento
+
+**Resultados específicos**
+
+- Explica la función de R, Quarto, Git y GitHub dentro del flujo de investigación.
+- Organiza archivos mediante una estructura reproducible.
+- Crea y renderiza un documento QMD.
+- Registra un cambio coherente mediante Git.
+
+**Producto:** primer documento HTML y commit inicial.
+
+## Clase 2 · De los datos a la evidencia
+
+**Resultados específicos**
+
+- Descarga datos mediante código y registra su procedencia.
+- Separa datos originales, procesados y resultados.
+- Construye una figura y una tabla reproducibles.
+- Redacta una interpretación compatible con el alcance descriptivo.
+
+**Producto:** base procesada, evidencia visual y segundo commit.
+
+## Clase 3 · Del análisis a la publicación
+
+**Resultados específicos**
+
+- Integra pregunta, método, resultados y limitaciones.
+- Genera HTML y Word desde una misma fuente.
+- Publica el sitio mediante GitHub Pages.
+- Identifica una versión estable con una etiqueta de Git.
+
+**Producto:** informe final, sitio publicado y etiqueta `v1.0.0`.
+
+## Evaluación formativa
+
+| Evidencia | Ponderación sugerida |
+|---|---:|
+| Práctica 1 | 20% |
+| Práctica 2 | 30% |
+| Práctica 3 e informe final | 50% |
+
+La evaluación prioriza trazabilidad, ejecución correcta e interpretación responsable. La complejidad estadística cumple una función secundaria en este curso introductorio.
+
+## Requisitos técnicos
+
+- R 4.3 o posterior
+- RStudio Desktop actualizado
+- Quarto CLI
+- Git
+- cuenta de GitHub
+- conexión a internet para la descarga inicial y la publicación
+
+## Bibliografía básica
+
+- @wickham2023
+- @gandrud2020
+- @quarto2026
+- @worldbank2026

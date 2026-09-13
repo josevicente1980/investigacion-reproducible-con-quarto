@@ -1,0 +1,259 @@
+---
+title: "Investigación reproducible con Quarto"
+subtitle: "Clase 1 · Del proyecto al primer documento"
+author: "José Vicente Ordóñez Yaguache"
+institute: "Universidad Nacional de Loja"
+format:
+  revealjs:
+    theme: [default, recursos/tema.scss]
+    slide-number: c/t
+    transition: fade
+    incremental: false
+    embed-resources: true
+    width: 1600
+    height: 900
+execute:
+  echo: true
+  eval: false
+---
+
+## Propósito de la sesión
+
+Al terminar, cada participante tendrá:
+
+- un proyecto de R con estructura reproducible
+- un documento Quarto con texto, código y resultados
+- un repositorio Git con su primer historial de cambios
+
+## Ruta de trabajo · 120 minutos
+
+| Bloque | Minutos | Producto |
+|---|---:|---|
+| Investigación reproducible | 15 | Criterios de reproducibilidad |
+| Proyecto en RStudio | 20 | Carpeta y proyecto abiertos |
+| Primer documento Quarto | 35 | HTML renderizado |
+| Git y GitHub | 30 | Primer commit y repositorio remoto |
+| Práctica y cierre | 20 | Evidencia de aprendizaje |
+
+## El problema que resolvemos
+
+Una investigación suele separar:
+
+- datos en una carpeta personal
+- código distribuido en varios archivos
+- tablas copiadas a Word
+- versiones finales con nombres ambiguos
+
+La consecuencia es simple: nadie puede reconstruir el resultado con certeza.
+
+## Qué significa reproducibilidad
+
+> Una tercera persona puede obtener el mismo resultado a partir de los datos, el código y las instrucciones conservadas en el proyecto.
+
+La reproducibilidad exige trazabilidad. Cada resultado debe tener un origen identificable.
+
+## El sistema de trabajo
+
+```{mermaid}
+flowchart LR
+  A[Datos originales] --> B[Código en R]
+  B --> C[Datos procesados]
+  C --> D[Tablas y figuras]
+  D --> E[Documento Quarto]
+  E --> F[GitHub]
+```
+
+## Cuatro herramientas, cuatro funciones
+
+| Herramienta | Función en la investigación |
+|---|---|
+| RStudio | Entorno de trabajo |
+| R | Limpieza, análisis y visualización |
+| Quarto | Integración de narrativa, código y resultados |
+| GitHub | Historial, respaldo, colaboración y publicación |
+
+## El caso conductor
+
+**Pregunta exploratoria**
+
+¿Cómo evolucionaron el crecimiento económico, el desempleo y la inflación en Ecuador entre 2000 y 2024?
+
+Fuente: World Development Indicators del Banco Mundial [@worldbank2026].
+
+## Una pregunta investigable
+
+Una buena pregunta inicial identifica:
+
+- unidad de análisis: Ecuador por año
+- periodo: 2000–2024
+- variables: crecimiento, desempleo e inflación
+- propósito: describir patrones y explorar asociaciones
+
+La pregunta delimita el trabajo antes de abrir la base.
+
+## Estructura del repositorio
+
+```text
+investigacion-reproducible-con-quarto/
+├── R/
+├── clases/
+├── datos/original/
+├── datos/procesado/
+├── practicas/
+├── proyecto/
+├── referencias/
+├── recursos/
+├── resultados/
+├── _quarto.yml
+└── README.md
+```
+
+## Regla de integridad de los datos
+
+`datos/original/` conserva la descarga sin modificaciones.
+
+`datos/procesado/` contiene únicamente archivos que el código puede reconstruir.
+
+Los cambios manuales dentro de una hoja de cálculo rompen la trazabilidad.
+
+## El proyecto de RStudio
+
+1. Abrir `investigacion-reproducible-con-quarto.Rproj`.
+2. Confirmar que la consola inicia en la raíz del proyecto.
+3. Ejecutar una sola verificación.
+
+```{r}
+here::here()
+```
+
+La ruta debe terminar en `investigacion-reproducible-con-quarto`.
+
+## Anatomía de un archivo QMD
+
+```yaml
+---
+title: "Informe de investigación"
+author: "Nombre del autor"
+format: html
+---
+```
+
+La cabecera YAML define los metadatos y el formato de salida.
+
+## Texto académico en Markdown
+
+```markdown
+# Introducción
+
+## Pregunta de investigación
+
+El estudio analiza **tres indicadores** para Ecuador.
+
+- crecimiento económico
+- desempleo
+- inflación
+```
+
+Markdown describe la estructura lógica del texto.
+
+## Código de R dentro de Quarto
+
+````markdown
+```{r}
+#| label: vista-datos
+#| echo: true
+
+head(datos_ecuador)
+```
+````
+
+Las opciones con `#|` controlan la ejecución y la presentación del resultado.
+
+## Renderizar cambia el estado del proyecto
+
+```{mermaid}
+flowchart TD
+  A[Archivo QMD] --> B[Quarto render]
+  B --> C[Ejecuta R]
+  C --> D[Inserta resultados]
+  D --> E[Genera HTML]
+```
+
+El archivo HTML es un producto derivado. La fuente sigue siendo el QMD.
+
+## Primera ejecución
+
+Desde la consola de R:
+
+```{r}
+source("R/00_instalar_paquetes.R")
+```
+
+Después, desde la terminal:
+
+```bash
+quarto render practicas/practica_1.qmd
+```
+
+## Git registra decisiones
+
+Un commit conserva un cambio coherente junto con una explicación breve.
+
+```bash
+git status
+git add practicas/practica_1.qmd
+git commit -m "Completa primera práctica en Quarto"
+```
+
+`git status` se revisa antes y después de cada commit.
+
+## GitHub conecta el repositorio local
+
+```bash
+git branch -M main
+git remote add origin https://github.com/USUARIO/REPOSITORIO.git
+git push -u origin main
+```
+
+Git trabaja localmente. GitHub aloja y comparte el historial remoto.
+
+## Ciclo mínimo de trabajo
+
+```{mermaid}
+flowchart LR
+  A[Editar] --> B[Renderizar]
+  B --> C[Verificar]
+  C --> D[Commit]
+  D --> E[Push]
+```
+
+Cada ciclo debe producir un avance pequeño y comprensible.
+
+## Práctica guiada · 20 minutos
+
+Abra `practicas/practica_1.qmd` y complete:
+
+1. identidad del proyecto
+2. pregunta de investigación
+3. un bloque de código ejecutable
+4. render del documento
+5. commit de cierre
+
+## Evidencia de aprendizaje
+
+La sesión queda completada cuando:
+
+- el QMD renderiza sin errores
+- el HTML contiene texto y un resultado de R
+- `git status` queda limpio después del commit
+- el historial muestra un mensaje descriptivo
+
+## Próxima sesión
+
+La clase 2 conectará el documento con datos reales y convertirá el análisis en figuras y tablas reproducibles.
+
+Comando previo:
+
+```{r}
+source("R/01_descargar_datos.R")
+```

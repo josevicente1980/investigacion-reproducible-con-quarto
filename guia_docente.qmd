@@ -1,0 +1,44 @@
+---
+title: "Guía docente"
+format: html
+---
+
+## Antes del curso
+
+1. Verifique R, RStudio, Quarto y Git en el equipo docente.
+2. Clone el repositorio y abra el archivo `.Rproj`.
+3. Ejecute los scripts 00, 01, 02 y 03 en ese orden.
+4. Ejecute `source("R/98_renderizar_clases.R")`.
+5. Confirme que `git status` no muestre cambios inesperados.
+
+## Dinámica recomendada
+
+Cada clase alterna explicaciones breves con ejecución en vivo. El participante trabaja siempre sobre el mismo repositorio. La práctica final de cada sesión funciona como evidencia de aprendizaje y como punto de recuperación.
+
+## Control al final de cada clase
+
+| Clase | Verificación | Momento para guardar |
+|---|---|---|
+| 1 | QMD y HTML funcionan | Commit después del primer render |
+| 2 | Datos y figura se reconstruyen | Commit después del control de calidad |
+| 3 | Informe y sitio funcionan | Commit, etiqueta `v1.0.0` y `renv::snapshot()` |
+
+## Dependencias
+
+El archivo `DESCRIPTION` declara los paquetes. Cuando el proyecto haya renderizado correctamente en el equipo principal, puede fijar sus versiones:
+
+```r
+install.packages("renv")
+renv::init(bare = TRUE)
+renv::snapshot()
+```
+
+Guarde `renv.lock` en Git únicamente después de comprobar un render completo.
+
+## Criterios de evaluación
+
+- estructura y trazabilidad de archivos
+- ejecución sin errores
+- correspondencia entre pregunta, variable y evidencia
+- interpretación responsable
+- historial de Git comprensible

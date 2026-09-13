@@ -1,0 +1,9 @@
+/*-- scss:defaults --*/
+$font-family-sans-serif: "Aptos", "Segoe UI", Arial, sans-serif;
+$primary: #123B5D;
+$link-color: #007F7B;
+
+/*-- scss:rules --*/
+h1, h2, h3 { color: #123B5D; }
+h2 { border-bottom: 3px solid #F2B134; padding-bottom: .2rem; }
+.callout { border-radius: 0; }

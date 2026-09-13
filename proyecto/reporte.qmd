@@ -1,0 +1,99 @@
+---
+title: "Indicadores macroeconómicos de Ecuador, 2000–2024"
+subtitle: "Ejemplo de informe reproducible"
+author: "Nombre del participante"
+date: today
+lang: es
+format:
+  html:
+    toc: true
+    code-fold: true
+  docx:
+    toc: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: preparar-proyecto
+#| include: false
+
+source("R/01_descargar_datos.R")
+source("R/02_preparar_datos.R")
+source("R/03_analizar_datos.R")
+
+datos_ecuador <- readr::read_csv(
+  here::here("datos", "procesado", "ecuador_macro.csv"),
+  show_col_types = FALSE
+)
+resumen_periodo <- readr::read_csv(
+  here::here("resultados", "tablas", "resumen_periodo.csv"),
+  show_col_types = FALSE
+)
+modelo <- readr::read_csv(
+  here::here("resultados", "modelos", "modelo_desempleo.csv"),
+  show_col_types = FALSE
+)
+```
+
+# Introducción
+
+El seguimiento de los principales indicadores macroeconómicos permite describir cambios en el desempeño de una economía y formular nuevas preguntas de investigación. Este informe examina el crecimiento del producto interno bruto, el desempleo y la inflación en Ecuador entre 2000 y 2024.
+
+La pregunta que guía el ejercicio es: **¿cómo evolucionaron estos indicadores y qué asociación exploratoria existe entre el crecimiento económico y el desempleo?**
+
+# Datos y método
+
+Los datos proceden de World Development Indicators [@worldbank2026]. La unidad de análisis es el año y la cobertura prevista comprende 25 observaciones. Los scripts conservan la descarga original, construyen una base procesada y generan los resultados derivados.
+
+El análisis incluye una descripción gráfica, promedios por periodo y una regresión lineal exploratoria. El modelo utiliza el desempleo como variable dependiente e incorpora crecimiento e inflación como predictores. Su finalidad es pedagógica y descriptiva.
+
+# Resultados
+
+```{r}
+#| label: fig-series
+#| fig-cap: "Indicadores macroeconómicos de Ecuador"
+#| out-width: 82%
+
+knitr::include_graphics(
+  here::here("resultados", "figuras", "series_ecuador.png")
+)
+```
+
+La @fig-series permite identificar variaciones entre años y diferencias en la escala de cada indicador. Complete aquí una interpretación de los dos patrones más relevantes.
+
+```{r}
+#| label: tbl-periodos
+#| tbl-cap: "Promedios de los indicadores por periodo"
+
+knitr::kable(
+  resumen_periodo,
+  digits = 2,
+  col.names = c("Periodo", "Crecimiento", "Desempleo", "Inflación")
+)
+```
+
+La @tbl-periodos resume las diferencias entre periodos. Complete aquí una comparación precisa que incluya unidad y periodo.
+
+## Asociación exploratoria
+
+```{r}
+#| label: tbl-modelo
+#| tbl-cap: "Modelo exploratorio del desempleo"
+
+knitr::kable(modelo, digits = 3)
+```
+
+La @tbl-modelo presenta asociaciones condicionadas a las variables incluidas. Complete aquí una interpretación que diferencie asociación y causalidad.
+
+# Limitaciones
+
+El ejercicio utiliza una serie anual corta y un modelo lineal simplificado. No controla la dinámica temporal, los cambios de medición, la posible simultaneidad ni otros determinantes del desempleo. Por ello, los coeficientes no identifican efectos causales.
+
+# Conclusiones
+
+Complete dos conclusiones que respondan la pregunta inicial y mantengan el alcance exploratorio del estudio.
+
+# Referencias

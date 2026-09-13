@@ -1,0 +1,47 @@
+---
+title: "Investigación reproducible con Quarto"
+subtitle: "Tres clases desde cero con R y GitHub"
+page-layout: full
+toc: false
+---
+
+## Propósito
+
+Este curso introduce un flujo completo de investigación reproducible. Durante tres sesiones de dos horas, los participantes construyen un proyecto con datos socioeconómicos de Ecuador, producen evidencia con R, redactan con Quarto y conservan el historial en GitHub.
+
+## Recorrido
+
+| Clase | Pregunta central | Producto |
+|---|---|---|
+| [1. Del proyecto al primer documento](clases/clase_1/01_fundamentos.qmd) | ¿Cómo se organiza una investigación reproducible? | Proyecto, QMD, HTML y primer commit |
+| [2. De los datos a la evidencia](clases/clase_2/02_datos_evidencia.qmd) | ¿Cómo se conectan fuente, código y resultado? | Base procesada, figura, tabla y segundo commit |
+| [3. Del análisis a la publicación](clases/clase_3/03_publicacion.qmd) | ¿Cómo se comunica y publica el proyecto? | Informe, sitio web y versión 1.0 |
+
+## Caso conductor
+
+El proyecto examina la evolución del crecimiento del PIB, el desempleo y la inflación en Ecuador entre 2000 y 2024. Los datos proceden de World Development Indicators [@worldbank2026].
+
+## Inicio rápido
+
+```r
+source("R/00_instalar_paquetes.R")
+source("R/01_descargar_datos.R")
+source("R/02_preparar_datos.R")
+source("R/03_analizar_datos.R")
+```
+
+Después, desde la terminal:
+
+```bash
+quarto preview
+```
+
+::: {.callout-important}
+Abra siempre el archivo `investigacion-reproducible-con-quarto.Rproj` antes de ejecutar el código.
+:::
+
+## Autor
+
+**José Vicente Ordóñez Yaguache**
+Universidad Nacional de Loja
+[jose.ordonez@unl.edu.ec](mailto:jose.ordonez@unl.edu.ec)

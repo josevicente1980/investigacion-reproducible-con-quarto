@@ -1,0 +1,74 @@
+---
+title: "Práctica 2 · De los datos a la evidencia"
+format: html
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Objetivo
+
+Reconstruir la base procesada, verificar su cobertura y comunicar un patrón mediante una figura reproducible.
+
+## 1. Construcción de la base
+
+```{r}
+source("R/01_descargar_datos.R")
+source("R/02_preparar_datos.R")
+
+datos_ecuador <- readr::read_csv(
+  here::here("datos", "procesado", "ecuador_macro.csv"),
+  show_col_types = FALSE
+)
+```
+
+## 2. Control de calidad
+
+Complete el código para contar los valores faltantes de cada variable.
+
+```{r}
+#| eval: false
+
+datos_ecuador |>
+  dplyr::summarise(
+    dplyr::across(
+      crecimiento_pib:pib_per_capita_usd,
+      __________
+    )
+  )
+```
+
+**¿Qué variable presenta mayor pérdida de información?**
+
+## 3. Evidencia visual
+
+Complete la variable del eje vertical.
+
+```{r}
+#| label: fig-crecimiento
+#| fig-cap: "Crecimiento anual del PIB de Ecuador"
+#| eval: false
+
+ggplot2::ggplot(datos_ecuador, ggplot2::aes(anio, __________)) +
+  ggplot2::geom_hline(yintercept = 0, color = "grey70") +
+  ggplot2::geom_line(color = "#123B5D", linewidth = 0.9) +
+  ggplot2::labs(x = NULL, y = "% anual") +
+  ggplot2::theme_minimal()
+```
+
+## 4. Interpretación
+
+En un máximo de 80 palabras, describa el patrón de la @fig-crecimiento. Distinga lo observado de una posible explicación.
+
+**Respuesta:**
+
+## 5. Registro en Git
+
+```bash
+git status
+git diff
+git add practicas/practica_2.qmd datos/
+git commit -m "Analiza indicadores socioeconómicos de Ecuador"
+git push
+```

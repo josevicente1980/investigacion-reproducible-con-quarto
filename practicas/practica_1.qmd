@@ -1,0 +1,56 @@
+---
+title: "Práctica 1 · Primer documento reproducible"
+format: html
+execute:
+  echo: true
+---
+
+## Objetivo
+
+Crear un documento Quarto que combine una pregunta de investigación, texto académico y un resultado calculado con R.
+
+## 1. Identidad del proyecto
+
+Complete:
+
+- **Autor:**
+- **Área de investigación:**
+- **Fecha:**
+
+## 2. Pregunta de investigación
+
+Reescriba con sus palabras la pregunta del caso conductor e identifique la unidad de análisis, el periodo y las variables.
+
+**Respuesta:**
+
+## 3. Primer cálculo
+
+Modifique el vector y explique el resultado.
+
+```{r}
+crecimiento_ejemplo <- c(1.2, 2.4, -0.8, 3.1, 1.7)
+mean(crecimiento_ejemplo)
+```
+
+**Interpretación:**
+
+## 4. Verificación
+
+Desde la terminal ejecute:
+
+```bash
+quarto render practicas/practica_1.qmd
+```
+
+Marque cuando el HTML se genere sin errores: [ ]
+
+## 5. Registro en Git
+
+```bash
+git status
+git add practicas/practica_1.qmd
+git commit -m "Completa primera práctica en Quarto"
+git status
+```
+
+**Hash abreviado del commit:**

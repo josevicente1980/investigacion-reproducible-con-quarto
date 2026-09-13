@@ -1,0 +1,56 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - programa.qmd
+    - clases/**/*.qmd
+    - practicas/**/*.qmd
+    - proyecto/**/*.qmd
+
+website:
+  title: "Investigación reproducible con Quarto"
+  site-url: "https://josevicente1980.github.io/investigacion-reproducible-con-quarto/"
+  repo-url: "https://github.com/josevicente1980/investigacion-reproducible-con-quarto"
+  repo-actions: [edit, issue]
+  navbar:
+    left:
+      - href: index.qmd
+        text: Inicio
+      - href: programa.qmd
+        text: Programa
+      - text: Clases
+        menu:
+          - href: clases/clase_1/01_fundamentos.qmd
+            text: "1. Del proyecto al primer documento"
+          - href: clases/clase_2/02_datos_evidencia.qmd
+            text: "2. De los datos a la evidencia"
+          - href: clases/clase_3/03_publicacion.qmd
+            text: "3. Del análisis a la publicación"
+      - text: Prácticas
+        menu:
+          - href: practicas/practica_1.qmd
+            text: Práctica 1
+          - href: practicas/practica_2.qmd
+            text: Práctica 2
+          - href: practicas/practica_3.qmd
+            text: Práctica 3
+      - href: proyecto/reporte.qmd
+        text: Proyecto final
+      - href: guia_docente.qmd
+        text: Guía docente
+
+format:
+  html:
+    theme: [cosmo, recursos/sitio.scss]
+    toc: true
+    lang: es
+    code-copy: true
+    code-overflow: wrap
+
+bibliography: referencias/referencias.bib
+language: es
+execute:
+  freeze: auto
+  warning: false
+  message: false

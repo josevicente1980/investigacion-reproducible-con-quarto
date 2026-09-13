@@ -1,0 +1,21 @@
+Package: investigacion.reproducible.con.quarto
+Title: Curso de investigación reproducible con Quarto
+Version: 0.1.0
+Authors@R: person("José Vicente", "Ordóñez Yaguache", role = c("aut", "cre"), email = "jose.ordonez@unl.edu.ec")
+Description: Material docente para tres clases introductorias de Quarto, R y GitHub aplicados a la investigación.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Imports:
+    broom,
+    dplyr,
+    ggplot2,
+    gt,
+    here,
+    janitor,
+    knitr,
+    readr,
+    rmarkdown,
+    scales,
+    tibble,
+    tidyr,
+    WDI
