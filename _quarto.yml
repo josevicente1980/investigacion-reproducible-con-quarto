@@ -49,7 +49,7 @@ format:
     code-overflow: wrap
 
 bibliography: referencias/referencias.bib
-language: es
+lang: es
 execute:
   freeze: auto
   warning: false
