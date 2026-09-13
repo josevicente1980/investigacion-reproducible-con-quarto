@@ -5,7 +5,7 @@ author: "José Vicente Ordóñez Yaguache"
 institute: "Universidad Nacional de Loja"
 format:
   revealjs:
-    theme: [default, recursos/tema.scss]
+    theme: [default, ../../recursos/tema.scss]
     slide-number: c/t
     transition: fade
     incremental: false
