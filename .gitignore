@@ -6,3 +6,13 @@ renv/library/
 renv/staging/
 _freeze/
 /.quarto/
+
+**/*.quarto_ipynb
+
+# Productos generados por R y Quarto
+datos/original/*.csv
+datos/procesado/*.csv
+resultados/figuras/
+resultados/modelos/
+resultados/tablas/
+docs/

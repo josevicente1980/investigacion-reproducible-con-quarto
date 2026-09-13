@@ -59,7 +59,7 @@ ggplot2::ggplot(datos_ecuador, ggplot2::aes(anio, __________)) +
 
 ## 4. Interpretación
 
-En un máximo de 80 palabras, describa el patrón de la @fig-crecimiento. Distinga lo observado de una posible explicación.
+En un máximo de 80 palabras, describa el patrón del gráfico propuesto. Distinga lo observado de una posible explicación.
 
 **Respuesta:**
 
